@@ -1,10 +1,12 @@
 #pragma once
 
 #include <Arduino.h>
-#include <ESP8266WebServer.h>
+#include <ESPAsyncWebServer.h>
 
-bool postStop(ESP8266WebServer &server){
-    Serial.println("Stopping movement");
-    server.send(200);
-    return true;
-}
+#include "../servos.h"
+
+ArRequestHandlerFunction handleStop = ([](AsyncWebServerRequest *request) {
+    pwm.setAllChannelsPWM(0);
+    Serial.println("Stopped movement");
+    request->send(200);
+});

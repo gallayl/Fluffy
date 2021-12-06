@@ -1,11 +1,16 @@
 #pragma once
 
-#include <WiFiManager.h>
+#include <ESPAsyncWebServer.h>
+#include <ESPAsyncWiFiManager.h>
+#include "web.h"
+
+DNSServer dns;
+
 
 void setupWifi()
 {
     WiFi.mode(WIFI_STA);
-    WiFiManager wm;
+    AsyncWiFiManager wm(server,&dns);
 
     Serial.println(F("Setting up WiFi connection..."));
 
